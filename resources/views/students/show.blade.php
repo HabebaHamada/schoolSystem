@@ -10,15 +10,15 @@
 
 <body>
     <div class="container mt-5">
-        <h1>Student Details: {{ $student->Name }}</h1>
+        <h1>Student Details: {{ $student->name }}</h1>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Student ID: {{ $student->ID }}</h5>
-                <p class="card-text"><strong>Name:</strong> {{ $student->Name }}</p>
-                <p class="card-text"><strong>Date of Birth:</strong> {{ $student->DateOfBirth }}</p>
+                <h5 class="card-title">Student ID: {{ $student->id }}</h5>
+                <p class="card-text"><strong>Name:</strong> {{ $student->name }}</p>
+                <p class="card-text"><strong>Date of Birth:</strong> {{ $student->date_of_birth }}</p>
                 <p class="card-text"><strong>Class:</strong>
                     @if($student->class)
-                        <a href="{{ route('classes.show', $student->class->ID) }}">{{ $student->class->Name }}</a>
+                        <a href="{{ route('classes.show', $student->class->id) }}">{{ $student->class->name }}</a>
                     @else
                         N/A
                     @endif
@@ -26,7 +26,7 @@
                 <p class="card-text"><strong>Subjects:</strong></p>
                 <ul>
                     @forelse ($student->subjects as $subject)
-                        <li><a href="{{ route('subjects.show', $subject->ID) }}">{{ $subject->Name }}</a></li>
+                        <li><a href="{{ route('subjects.show', $subject->id) }}">{{ $subject->name }}</a></li>
                     @empty
                         <li>No subjects assigned.</li>
                     @endforelse

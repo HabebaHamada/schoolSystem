@@ -10,16 +10,16 @@
 
 <body>
     <div class="container mt-5">
-        <h1>Class Details: {{ $class->Name }}</h1>
+        <h1>Class Details: {{ $class->name }}</h1>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Class ID: {{ $class->ID }}</h5>
-                <p class="card-text"><strong>Name:</strong> {{ $class->Name }}</p>
+                <h5 class="card-title">Class ID: {{ $class->id }}</h5>
+                <p class="card-text"><strong>Name:</strong> {{ $class->name }}</p>
                 <p class="card-text"><strong>Students in this Class:</strong></p>
                 <ul>
                     @forelse ($class->students as $student)
-                        <li><a href="{{ route('students.show', $student->ID) }}">{{ $student->Name }}</a>
-                            ({{ $student->DateOfBirth }})</li>
+                        <li><a href="{{ route('students.show', $student->id) }}">{{ $student->name }}</a>
+                            ({{ $student->date_of_birth }})</li>
                     @empty
                         <li>No students in this class.</li>
                     @endforelse

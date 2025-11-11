@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\StudentService;
-use Illuminate\Http\Request;
+use App\Repositories\StudentRepository;
 
 class StudentController extends Controller
 {
-    protected $studentService;
+    protected $studentRepository;
 
-    public function __construct(StudentService $studentService)
+    public function __construct(StudentRepository $studentRepository)
     {
-        $this->studentService = $studentService;
+        $this->studentRepository = $studentRepository;
     }
 
     /**
@@ -19,7 +18,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = $this->studentService->getAllStudents();
+        $students = $this->studentRepository->getAllStudents();
         return view('students.index', compact('students'));
     }
 
@@ -28,7 +27,7 @@ class StudentController extends Controller
      */
     public function show(int $id)
     {
-        $student = $this->studentService->getStudentById($id);
+        $student = $this->studentRepository->getStudentById($id);
 
         if (!$student) {
             abort(404, 'Student not found');

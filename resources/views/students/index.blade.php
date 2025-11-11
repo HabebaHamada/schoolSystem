@@ -25,19 +25,19 @@
             <tbody>
                 @foreach($students as $student)
                     <tr>
-                        <td>{{ $student->ID }}</td>
-                        <td>{{ $student->Name }}</td>
-                        <td>{{ $student->class->Name ?? 'N/A' }}</td>
-                        <td>{{ $student->DateOfBirth }}</td>
+                        <td>{{ $student->id }}</td>
+                        <td>{{ $student->name }}</td>
+                        <td>{{ $student->school_class_id ?? 'N/A' }}</td>
+                        <td>{{ $student->date_of_birth }}</td>
                         <td>
                             @forelse ($student->subjects as $subject)
-                                <span class="badge bg-primary">{{ $subject->Name }}</span>
+                                <span class="badge bg-primary">{{ $subject->name }}</span>
                             @empty
                                 No Subjects
                             @endforelse
                         </td>
                         <td>
-                            <a href="{{ route('students.show', $student->ID) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('students.show', $student->id) }}" class="btn btn-info btn-sm">View</a>
                         </td>
                     </tr>
                 @endforeach

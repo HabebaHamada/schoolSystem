@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories;
 
 use App\Models\SchoolClass;
-use App\Repositories\Contracts\ClassRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class ClassRepository implements ClassRepositoryInterface
+class ClassRepository
 {
     protected $model;
 
@@ -15,22 +14,22 @@ class ClassRepository implements ClassRepositoryInterface
         $this->model = $model;
     }
 
-    public function all(): Collection
+    public function getAllClasses(): Collection
     {
         return $this->model->all();
     }
 
-    public function find(int $id): ?SchoolClass
+    public function getClassById(int $id): ?SchoolClass
     {
         return $this->model->find($id);
     }
 
-    public function create(array $data): SchoolClass
+    public function createClass(array $data): SchoolClass
     {
         return $this->model->create($data);
     }
 
-    public function update(int $id, array $data): bool
+    public function updateClass(int $id, array $data): bool
     {
         $class = $this->model->find($id);
         if ($class) {
@@ -39,7 +38,7 @@ class ClassRepository implements ClassRepositoryInterface
         return false;
     }
 
-    public function delete(int $id): bool
+    public function deleteClass(int $id): bool
     {
         $class = $this->model->find($id);
         if ($class) {
@@ -47,7 +46,6 @@ class ClassRepository implements ClassRepositoryInterface
         }
         return false;
     }
-
     public function getClassWithStudents(int $id): ?SchoolClass
     {
         return $this->model->with('students')->find($id);

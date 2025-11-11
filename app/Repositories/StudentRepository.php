@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories;
 
 use App\Models\Student;
-use App\Repositories\Contracts\StudentRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class StudentRepository implements StudentRepositoryInterface
+class StudentRepository
 {
     protected $model;
 
@@ -15,22 +14,22 @@ class StudentRepository implements StudentRepositoryInterface
         $this->model = $model;
     }
 
-    public function all(): Collection
+    public function getAllStudents(): Collection
     {
         return $this->model->all();
     }
 
-    public function find(int $id): ?Student
+    public function getStudentById(int $id): ?Student
     {
         return $this->model->find($id);
     }
 
-    public function create(array $data): Student
+    public function createStudent(array $data): Student
     {
         return $this->model->create($data);
     }
 
-    public function update(int $id, array $data): bool
+    public function updateStudent(int $id, array $data): bool
     {
         $student = $this->model->find($id);
         if ($student) {
@@ -39,7 +38,7 @@ class StudentRepository implements StudentRepositoryInterface
         return false;
     }
 
-    public function delete(int $id): bool
+    public function deleteStudent(int $id): bool
     {
         $student = $this->model->find($id);
         if ($student) {
@@ -52,4 +51,5 @@ class StudentRepository implements StudentRepositoryInterface
     {
         return $this->model->with(['class', 'subjects'])->get();
     }
+
 }

@@ -10,16 +10,16 @@
 
 <body>
     <div class="container mt-5">
-        <h1>Subject Details: {{ $subject->Name }}</h1>
+        <h1>Subject Details: {{ $subject->name }}</h1>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Subject ID: {{ $subject->ID }}</h5>
-                <p class="card-text"><strong>Name:</strong> {{ $subject->Name }}</p>
+                <h5 class="card-title">Subject ID: {{ $subject->id }}</h5>
+                <p class="card-text"><strong>Name:</strong> {{ $subject->name }}</p>
                 <p class="card-text"><strong>Students taking this Subject:</strong></p>
                 <ul>
                     @forelse ($subject->students as $student)
-                        <li><a href="{{ route('students.show', $student->ID) }}">{{ $student->Name }}</a> (Class:
-                            {{ $student->class->Name ?? 'N/A' }})</li>
+                        <li><a href="{{ route('students.show', $student->id) }}">{{ $student->name }}</a> (Class:
+                            {{ $student->school_class_id ?? 'N/A' }})</li>
                     @empty
                         <li>No students are taking this subject.</li>
                     @endforelse

@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Repositories\Eloquent;
+namespace App\Repositories;
 
 use App\Models\Subject;
-use App\Repositories\Contracts\SubjectRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
-class SubjectRepository implements SubjectRepositoryInterface
+class SubjectRepository
 {
     protected $model;
 
@@ -14,23 +13,22 @@ class SubjectRepository implements SubjectRepositoryInterface
     {
         $this->model = $model;
     }
-
-    public function all(): Collection
+    public function getAllSubjects(): Collection
     {
         return $this->model->all();
     }
 
-    public function find(int $id): ?Subject
+    public function getSubjectById(int $id): ?Subject
     {
         return $this->model->find($id);
     }
 
-    public function create(array $data): Subject
+    public function createSubject(array $data): Subject
     {
         return $this->model->create($data);
     }
 
-    public function update(int $id, array $data): bool
+    public function updateSubject(int $id, array $data): bool
     {
         $subject = $this->model->find($id);
         if ($subject) {
@@ -39,7 +37,7 @@ class SubjectRepository implements SubjectRepositoryInterface
         return false;
     }
 
-    public function delete(int $id): bool
+    public function deleteSubject(int $id): bool
     {
         $subject = $this->model->find($id);
         if ($subject) {

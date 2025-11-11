@@ -8,15 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Subject extends Model
 {
     use HasFactory;
-    protected $table = 'Subject';
-    protected $primaryKey = 'ID';
-    protected $fillable = ['Name'];
+    protected $fillable = ['name'];
 
     /**
      * Get the students who are taking this subject.
      */
     public function students()
     {
-        return $this->belongsToMany(Student::class, 'StudentSubject', 'SubjectID', 'StudentID', 'ID', 'ID');
+        return $this->belongsToMany(Student::class);
     }
 }

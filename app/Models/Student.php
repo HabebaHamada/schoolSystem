@@ -7,16 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
-    protected $table = 'Student';
-    protected $primaryKey = 'ID';
-    protected $fillable = ['ClassID', 'Name', 'DateOfBirth'];
+    protected $fillable = ['school_class_id', 'name', 'date_of_birth'];
 
     /**
      * Get the class that the student belongs to.
      */
     public function class()
     {
-        return $this->belongsTo(SchoolClass::class, 'ClassID', 'ID');
+        return $this->belongsTo(SchoolClass::class);
     }
 
     /**
@@ -24,7 +22,7 @@ class Student extends Model
      */
     public function subjects()
     {
-        return $this->belongsToMany(Subject::class, 'StudentSubject', 'StudentID', 'SubjectID', 'ID', 'ID');
+        return $this->belongsToMany(Subject::class);
     }
 
 

@@ -9,15 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class SchoolClass extends Model
 {
     use HasFactory;
-    protected $table = 'Class';
-    protected $primaryKey = 'ID';
-    protected $fillable = ['Name'];
+    protected $fillable = ['name'];
 
     /**
      * Get the students for the class.
      */
     public function students()
     {
-        return $this->hasMany(Student::class, 'ClassID', 'ID');
+        return $this->hasMany(Student::class);
     }
 }

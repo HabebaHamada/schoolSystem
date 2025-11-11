@@ -22,10 +22,10 @@
             <tbody>
                 @foreach($subjects as $subject)
                     <tr>
-                        <td>{{ $subject->ID }}</td>
-                        <td>{{ $subject->Name }}</td>
+                        <td>{{ $subject->id }}</td>
+                        <td>{{ $subject->name }}</td>
                         <td>
-                            <a href="{{ route('subjects.show', $subject->ID) }}" class="btn btn-info btn-sm">View
+                            <a href="{{ route('subjects.show', $subject->id) }}" class="btn btn-info btn-sm">View
                                 Details</a>
                         </td>
                     </tr>

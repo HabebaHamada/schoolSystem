@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\SubjectService;
+use App\Repositories\SubjectRepository;
 
 class SubjectController extends Controller
 {
-    protected $subjectService;
+    protected $subjectRepository;
 
-    public function __construct(SubjectService $subjectService)
+    public function __construct(SubjectRepository $subjectRepository)
     {
-        $this->subjectService = $subjectService;
+        $this->subjectRepository = $subjectRepository;
     }
 
     /**
@@ -18,7 +18,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = $this->subjectService->getAllSubjects();
+        $subjects = $this->subjectRepository->getAllSubjects();
         return view('subjects.index', compact('subjects'));
     }
 
@@ -27,7 +27,7 @@ class SubjectController extends Controller
      */
     public function show(int $id)
     {
-        $subject = $this->subjectService->getSubjectDetailsWithStudents($id);
+        $subject = $this->subjectRepository->getSubjectWithStudents($id);
 
         if (!$subject) {
             abort(404, 'Subject not found');
