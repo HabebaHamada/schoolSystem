@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->date('date_of_birth');
-            $table->foreignId('school_class_id')->constrained()->onDelete('cascade');
+            $table->foreignId('school_class_id')->constrained('school_classes')->onDelete('cascade');
             $table->timestamps();
         });
     }

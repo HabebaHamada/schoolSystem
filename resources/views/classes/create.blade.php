@@ -20,11 +20,11 @@
             </div>
         @endif
 
-        <form action="{{ route('classes.create') }}" method="POST">
+        <form action="{{ route('classes.store') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="Name" class="form-label">Class Name:</label>
-                <input type="text" class="form-control" id="Name" name="Name" value="{{ old('Name') }}" required>
+                <label for="name" class="form-label">Class Name:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="{{ route('classes.index') }}" class="btn btn-secondary">Cancel</a>

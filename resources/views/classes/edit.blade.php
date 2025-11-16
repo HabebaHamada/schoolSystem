@@ -20,7 +20,7 @@
             </div>
         @endif
 
-        <form action="{{ route('classes.edit', $class->id) }}" method="POST">
+        <form action="{{ route('classes.update', $class->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="mb-3">

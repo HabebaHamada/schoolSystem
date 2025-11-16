@@ -28,11 +28,13 @@ Route::prefix('students')->group(function () {
 
 // Class Routes
 Route::prefix('classes')->group(function () {
+    Route::get('/create', [ClassController::class, 'create'])->name('classes.create');
+    Route::post('/', [ClassController::class, 'store'])->name('classes.store');
     Route::get('/', [ClassController::class, 'index'])->name('classes.index');
     Route::get('/{id}', [ClassController::class, 'show'])->name('classes.show');
-    Route::delete('/{id}', [ClassController::class, 'deleteClass'])->name('classes.destroy');
-    Route::get('/{id}/edit', [ClassController::class, 'editClass'])->name('classes.edit');
-    Route::post('/', [ClassController::class, 'createClass'])->name('classes.create');
+    Route::delete('/{id}', [ClassController::class, 'delete'])->name('classes.destroy');
+    Route::get('/{id}/edit', [ClassController::class, 'edit'])->name('classes.edit');
+    Route::put('/{id}', [ClassController::class, 'update'])->name('classes.update');
 });
 
 // Subject Routes

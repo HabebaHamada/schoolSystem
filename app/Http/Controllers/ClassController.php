@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Repositories\ClassRepository;
 
 class ClassController extends Controller
@@ -36,7 +37,7 @@ class ClassController extends Controller
         return view('classes.show', compact('class'));
     }
 
-    public function deleteClass(int $id)
+    public function delete(int $id)
     {
         $result = $this->classRepository->deleteClass($id);
 
@@ -47,20 +48,31 @@ class ClassController extends Controller
         return redirect()->route('classes.index')->with('success', 'Class is removed successfully.');
     }
 
-    public function editClass(int $id, array $data)
+    public function edit(int $id)
     {
-        $class = $this->classRepository->updateClass($id, $data);
-
-        if (!$class) {
-            abort(404, 'Class not found');
-        }
-
-        return view('classes.edit', compact('class'));
+        return view('classes.edit');
     }
 
-    public function createClass(array $data)
+    public function update(int $id, Request $request)
     {
-        $class = $this->classRepository->createClass($data);
+        $class = $this->classRepository->updateClass($id, $request->array('data'));
+
+        if (!$class) {
+            abort(404, 'Class not found or update failed');
+        }
+
+        return redirect()->route('classes.index')->with('success', 'Class is created successfully.');
+    }
+
+    public function create()
+    {
+
+        return view('classes.create');
+    }
+
+    public function store(Request $request)
+    {
+        $this->classRepository->createClass($request->array('data'));
 
         return redirect()->route('classes.index')->with('success', 'Class is created successfully.');
     }
