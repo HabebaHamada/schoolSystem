@@ -16,21 +16,24 @@
                 <h5 class="card-title">Student ID: {{ $student->id }}</h5>
                 <p class="card-text"><strong>Name:</strong> {{ $student->name }}</p>
                 <p class="card-text"><strong>Date of Birth:</strong> {{ $student->date_of_birth }}</p>
-                <p class="card-text"><strong>Class:</strong>
-                    @if($student->class)
-                        <a href="{{ route('classes.show', $student->class->id) }}">{{ $student->class->name }}</a>
+                <p class="card-text">
+                    <strong>Class:</strong>
+                    @if ($student->class)
+                        {{ $student->class->name }} (ID: {{ $student->class->id }})
                     @else
                         N/A
                     @endif
                 </p>
-                <p class="card-text"><strong>Subjects:</strong></p>
-                <ul>
-                    @forelse ($student->subjects as $subject)
-                        <li><a href="{{ route('subjects.show', $subject->id) }}">{{ $subject->name }}</a></li>
-                    @empty
-                        <li>No subjects assigned.</li>
-                    @endforelse
-                </ul>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Enrolled Subjects</h5>
+                        @forelse ($student->subjects as $subject)
+                            <span class="badge bg-secondary me-1">{{ $subject->name }}</span>
+                        @empty
+                            <p class="card-text">No subjects enrolled.</p>
+                        @endforelse
+                    </div>
+                </div>
                 <a href="{{ route('students.index') }}" class="btn btn-primary">Back to Students</a>
             </div>
         </div>

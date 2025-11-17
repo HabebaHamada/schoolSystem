@@ -21,7 +21,7 @@ class StudentRepository
 
     public function getStudentById(int $id): ?Student
     {
-        return $this->model->find($id);
+        return $this->model->with(['class', 'subjects'])->find($id);
     }
 
     public function createStudent(array $data): Student

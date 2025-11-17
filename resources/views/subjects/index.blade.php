@@ -11,6 +11,23 @@
 <body>
     <div class="container mt-5">
         <h1>All Subjects</h1>
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <div class="mb-3">
+            <a href="{{ route('subjects.create') }}" class="btn btn-primary">Add New Subject</a>
+        </div>
+
+        <h1>All Subjects</h1>
         <table class="table table-bordered">
             <thead>
                 <tr>

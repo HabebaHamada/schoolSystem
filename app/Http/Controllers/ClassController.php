@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreClassRequest;
+use App\Http\Requests\EditClassRequest;
 use App\Repositories\ClassRepository;
 
 class ClassController extends Controller
@@ -50,18 +52,19 @@ class ClassController extends Controller
 
     public function edit(int $id)
     {
-        return view('classes.edit');
+        $class = $this->classRepository->getClassWithStudents($id);
+        return view('classes.edit',compact('class'));
     }
 
-    public function update(int $id, Request $request)
+    public function update(int $id, EditClassRequest $request)
     {
-        $class = $this->classRepository->updateClass($id, $request->array('data'));
+        $class = $this->classRepository->updateClass($id, $request->validated());
 
         if (!$class) {
             abort(404, 'Class not found or update failed');
         }
 
-        return redirect()->route('classes.index')->with('success', 'Class is created successfully.');
+        return redirect()->route('classes.index')->with('success', 'Class is updated successfully.');
     }
 
     public function create()
@@ -70,9 +73,9 @@ class ClassController extends Controller
         return view('classes.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreClassRequest $request)
     {
-        $this->classRepository->createClass($request->array('data'));
+        $this->classRepository->createClass($request->validated());
 
         return redirect()->route('classes.index')->with('success', 'Class is created successfully.');
     }
