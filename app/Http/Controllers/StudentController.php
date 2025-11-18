@@ -4,20 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Repositories\StudentRepository;
 use App\Http\Requests\EditStudentRequest;
-use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\StoreStudentRequest;
 use App\Repositories\ClassRepository;
-use PhpParser\Builder\Class_;
+use App\Repositories\SubjectRepository;
+
 
 class StudentController extends Controller
 {
     protected $studentRepository;
     protected $schoolClassRepository;
+    protected $subjectRespository;
 
-    public function __construct(StudentRepository $studentRepository, ClassRepository $schoolClassRepository)
+    public function __construct(StudentRepository $studentRepository, ClassRepository $schoolClassRepository,SubjectRepository $subjectRespository)
     {
         $this->studentRepository = $studentRepository;
         $this->schoolClassRepository = $schoolClassRepository;
+        $this->subjectRespository=$subjectRespository;
     }
 
     /**
@@ -47,7 +49,8 @@ class StudentController extends Controller
     {
         // Fetch all classes to populate the dropdown
         $classes = $this->schoolClassRepository->getAllClasses();
-        return view('students.create', compact('classes'));
+        $subjects = $this->subjectRespository->getAllSubjects();
+        return view('students.create', compact('classes','subjects'));
     }
 
     public function store(StoreStudentRequest $Request)

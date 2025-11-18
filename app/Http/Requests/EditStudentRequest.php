@@ -27,6 +27,7 @@ class EditStudentRequest extends FormRequest
             'name' => ['required', 'string', 'max:255',  Rule::unique('students','name')->ignore($this->route('id'), 'id')],
             'school_class_id'=>  ['required', 'integer', 'exists:school_classes,id'],
             'date_of_birth'=> 'nullable|date',
+            'photo' => ['sometimes', 'image', 'mimes:jpg,png,jpeg,gif', 'max:2048'],
         ];
     }
 }

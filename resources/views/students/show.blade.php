@@ -24,6 +24,14 @@
                         N/A
                     @endif
                 </p>
+                @if ($student->photo)
+                <div class="mb-4">
+                    <label class="form-label">Student Photo:</label>
+                    <!-- Use Storage::url() to get the public URL for the stored file -->
+                    <img src="{{ Storage::url($student->photo) }}" alt="Student Photo"
+                        style="max-width: 150px; height: auto;">
+                </div>
+            @endif
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Enrolled Subjects</h5>

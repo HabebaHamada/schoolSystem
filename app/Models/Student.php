@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
-    protected $fillable = ['school_class_id', 'name', 'date_of_birth'];
+    protected $fillable = ['school_class_id', 'name', 'date_of_birth','photo'];
 
     /**
      * Get the class that the student belongs to.

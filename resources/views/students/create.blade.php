@@ -19,7 +19,18 @@
                 </ul>
             </div>
         @endif
-        <form action="{{ route('students.store') }}" method="POST">
+            <form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="mb-3">
+                <div class="mb-3">
+                    <label for="photo" class="form-label">choose Photo:</label>
+                    <!-- The 'name' attribute must match the 'photo' key in your validation/model -->
+                    <input type="file" class="form-control" id="photo" name="photo">
+                    @error('photo')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">Student Name:</label>

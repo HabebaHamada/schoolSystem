@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Storage; 
+
 
 class StudentRepository
 {
@@ -26,6 +28,17 @@ class StudentRepository
 
     public function createStudent(array $data): Student
     {
+        if (isset($data['photo'])) {
+        $file = $data['photo'];
+        $path = $file->store('students', 'public'); // Store in 'storage/app/public/students' folder
+        // Save the new path to the data array
+        $data['photo'] = $path;
+
+        } 
+        else {
+        // Remove photo from the $data array if it's not present (e.g., if we're only updating name)
+        unset($data['photo']);
+        }
         return $this->model->create($data);
     }
 
@@ -33,6 +46,22 @@ class StudentRepository
     {
         $student = $this->model->find($id);
         if ($student) {
+             if (isset($data['photo'])) {
+        $file = $data['photo'];
+        $path = $file->store('students', 'public'); // Store in 'storage/app/public/students' folder
+
+        // Delete old photo if it exists
+        if ($student->photo) {
+            Storage::disk('public')->delete($student->photo);
+        }
+
+        // Save the new path to the data array
+        $data['photo'] = $path;
+
+    } else {
+        // Remove photo from the $data array if it's not present (e.g., if we're only updating name)
+        unset($data['photo']);
+    }
             return $student->update($data);
         }
         return false;
