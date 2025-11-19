@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<x-app-layout>
 
 <head>
     <meta charset="UTF-8">
@@ -91,9 +91,9 @@
                     @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('classes.index') }}" class="btn btn-secondary">Cancel</a>
+                <a href="{{ route('students.index') }}" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
 </body>
 
-</html>
+</x-app-layout>

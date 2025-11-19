@@ -80,7 +80,10 @@ class StudentController extends Controller
         // Fetch all classes to populate the dropdown in the edit form
         $classes = $this->schoolClassRepository->getAllClasses();
 
-        return view('students.edit', compact('student','classes'));
+        $subjects = $this->subjectRespository->getAllSubjects();
+
+
+        return view('students.edit', compact('student','classes','subjects'));
     }
 
     public function update(int $id, EditStudentRequest $request)

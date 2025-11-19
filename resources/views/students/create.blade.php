@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<x-app-layout>
 
 <head>
     <meta charset="UTF-8">
@@ -82,4 +82,4 @@
     </div>
 </body>
 
-</html>
+</x-app-layout>
