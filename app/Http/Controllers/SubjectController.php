@@ -20,6 +20,9 @@ class SubjectController extends Controller
      */
     public function index()
     {
+        /*
+        this will eager load the subjects and classes
+         */
         $subjects = $this->subjectRepository->getAllSubjects();
         return view('subjects.index', compact('subjects'));
     }
@@ -38,7 +41,7 @@ class SubjectController extends Controller
         return view('subjects.show', compact('subject'));
     }
 
-     public function create()
+    public function create()
     {
         return view('subjects.create');
     }

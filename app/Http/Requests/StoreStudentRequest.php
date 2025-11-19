@@ -26,6 +26,8 @@ class StoreStudentRequest extends FormRequest
             'school_class_id'=>  ['required', 'integer', 'exists:school_classes,id'],
             'date_of_birth'=> 'nullable|date',
             'photo' => ['sometimes', 'image', 'mimes:jpg,png,jpeg,gif', 'max:2048'],
+            'subjects' => ['nullable', 'array'],
+            'subjects.*' => ['exists:subjects,id'],
 
         ];
     }

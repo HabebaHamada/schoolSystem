@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Student;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Storage; 
+use Illuminate\Support\Facades\Storage;
 
 
 class StudentRepository
@@ -29,40 +29,56 @@ class StudentRepository
     public function createStudent(array $data): Student
     {
         if (isset($data['photo'])) {
-        $file = $data['photo'];
-        $path = $file->store('students', 'public'); // Store in 'storage/app/public/students' folder
-        // Save the new path to the data array
-        $data['photo'] = $path;
-
-        } 
-        else {
-        // Remove photo from the $data array if it's not present (e.g., if we're only updating name)
-        unset($data['photo']);
+            $file = $data['photo'];
+            $path = $file->store('students', 'public'); // Store in 'storage/app/public/students' folder
+            // Save the new path to the data array
+            $data['photo'] = $path;
+        } else {
+            // Remove photo from the $data array if it's not present (e.g., if we're only updating name)
+            unset($data['photo']);
         }
-        return $this->model->create($data);
+
+        $subjects = $data['subjects'] ?? [];
+        unset($data['subjects']);
+        $student = $this->model->create($data);
+
+        // 3. Attach the subjects to the student
+        if (!empty($subjects)) {
+            $student->subjects()->sync($subjects);
+        }
+        return $student;
     }
 
     public function updateStudent(int $id, array $data): bool
     {
         $student = $this->model->find($id);
         if ($student) {
-             if (isset($data['photo'])) {
-        $file = $data['photo'];
-        $path = $file->store('students', 'public'); // Store in 'storage/app/public/students' folder
 
-        // Delete old photo if it exists
-        if ($student->photo) {
-            Storage::disk('public')->delete($student->photo);
-        }
+            $subjects = $data['subjects'] ?? [];
+            unset($data['subjects']); // Remove 'subjects' from $data so Eloquent doesn't try to update a non-existent column
+            if (isset($data['photo'])) {
+                $file = $data['photo'];
+                $path = $file->store('students', 'public'); // Store in 'storage/app/public/students' folder
 
-        // Save the new path to the data array
-        $data['photo'] = $path;
+                // Delete old photo if it exists
+                if ($student->photo) {
+                    Storage::disk('public')->delete($student->photo);
+                }
 
-    } else {
-        // Remove photo from the $data array if it's not present (e.g., if we're only updating name)
-        unset($data['photo']);
-    }
-            return $student->update($data);
+                // Save the new path to the data array
+                $data['photo'] = $path;
+            } else {
+                // Remove photo from the $data array if it's not present (e.g., if we're only updating name)
+                unset($data['photo']);
+            }
+            $success = $student->update($data);
+
+            // 4. Sync the subjects
+            if ($success) {
+                $student->subjects()->sync($subjects); // sync() will automatically detach old and attach new
+            }
+
+            return $success;
         }
         return false;
     }
@@ -80,5 +96,4 @@ class StudentRepository
     {
         return $this->model->with(['class', 'subjects'])->get();
     }
-
 }

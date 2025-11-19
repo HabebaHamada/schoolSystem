@@ -53,9 +53,10 @@
                     <label for="school_class_id" class="form-label">Class Name:</label>
                     <select class="form-select" class="form-control" id="school_class_id" name="school_class_id"
                         required>
-                        <option value="{{ old('name', $student->class->name)}}">Select a Class</option>
-                        @foreach($classes as $class)
-                            <option value="{{ $class->id }}" {{ (old('school_class_id', $student->school_class_id) == $class->id) ? 'selected' : '' }}>
+                        <option value="{{ old('name', $student->class->name) }}">Select a Class</option>
+                        @foreach ($classes as $class)
+                            <option value="{{ $class->id }}"
+                                {{ old('school_class_id', $student->school_class_id) == $class->id ? 'selected' : '' }}>
                                 {{ $class->name }}
                             </option>
                         @endforeach
@@ -68,6 +69,26 @@
                     <label for="date_of_birth" class="form-label">Date of Birth:</label>
                     <input type="text" class="form-control" id="date_of_birth" name="date_of_birth"
                         value="{{ old('date_of_birth', $student->date_of_birth) }}" optional>
+                </div>
+                <div class="mb-3">
+                    <label for="subjects" class="form-label">Edit Subjects:</label>
+                    <select multiple class="form-select" id="subjects" name="subjects[]">
+                        {{-- Get an array of IDs of the student's currently attached subjects --}}
+                        @php
+                            // Use old() for validation errors, fallback to current attached subjects
+                            $currentSubjectIds = old('subjects', $student->subjects->pluck('id')->toArray());
+                        @endphp
+
+                        @foreach ($subjects as $subject)
+                            <option value="{{ $subject->id }}"
+                                {{ in_array($subject->id, $currentSubjectIds) ? 'selected' : '' }}>
+                                {{ $subject->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('subjects')
+                        <div class="text-danger mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{ route('classes.index') }}" class="btn btn-secondary">Cancel</a>
