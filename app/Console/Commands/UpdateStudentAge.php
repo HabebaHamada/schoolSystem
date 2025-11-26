@@ -27,7 +27,7 @@ class UpdateStudentAge extends Command
      */
     public function handle()
     {
-       $this->info('Starting student age update...');
+    $this->info('Starting student age update...');
 
         $students = Student::whereNotNull('date_of_birth')->get();
         $updatesCount = 0;
@@ -39,12 +39,12 @@ class UpdateStudentAge extends Command
 
                 $age = $dob->diffInYears($now);
 
-                 if (!isset($student->age) || $student->age != $age) {
-                    
-                    $student->age = $age; 
-                    $student->save();    
-                    
-                    $updatesCount++;     
+                if (!isset($student->age) || $student->age != $age) {
+
+                    $student->age = $age;
+                    $student->save();
+
+                    $updatesCount++;
                 }
 
             } catch (\Exception $e) {
@@ -54,6 +54,6 @@ class UpdateStudentAge extends Command
 
         $this->info("Student age update complete. {$updatesCount} students were updated.");
 
-        return 0; 
+        return 0;
     }
 }
